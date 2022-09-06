@@ -1,7 +1,8 @@
 const http = require("http");
 const port = 3000;
 
-const routes = {
+const rotas = {
+    "/": 'Aplicativo back-end',
     "/api/v1/users": 'Mostra users',
     "/api/v1/users/:id": 'Mostra por id',
 }

@@ -1,6 +1,6 @@
 import usuarios from "../models/Usuario.js";
 
-class usuarioController {
+class UsuarioController {
 
     static listarUsuarios = (req, res) => {
         usuarios.find((err, usuarios) => {
@@ -9,4 +9,4 @@ class usuarioController {
     }
 }
 
-export default usuarioController
+export default UsuarioController

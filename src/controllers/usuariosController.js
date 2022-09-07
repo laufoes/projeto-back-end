@@ -3,9 +3,15 @@ import usuarios from "../models/Usuario.js";
 class UsuarioController {
 
     static listarUsuarios = (req, res) => {
+        const page  = req.query.page || 0;
+        const usuariosPorPagina = 3;
+
         usuarios.find((err, usuarios) => {
             res.status(200).json(usuarios)
-        });
+        })
+        .sort({"id":1})
+        .limit(usuariosPorPagina)
+        .skip(page * usuariosPorPagina)
     }
 
     static listarUsuariosPorNome = (req, res) => {
@@ -46,7 +52,7 @@ class UsuarioController {
     static atualizarUsuario = (req, res) => {
         const id = req.params.id;
 
-        usuarios.findByIdAndUpdate(id, {$set: req.body}, (err) => {
+        usuarios.findByIdAndUpdate(id, {$set: req.body}, {runValidators: true}, (err) => {
             if(err) {
                 res.status(404).send({message: `${err.message} ID de usuário não localizado.`})
             } else {

@@ -16,11 +16,12 @@ class UsuarioController {
 
     static listarUsuariosPorNome = (req, res) => {
         const name = req.query.name;
+
         usuarios.find({'name': name}, {}, (err, usuarios) => {
-            if(!err) {
-                res.status(200).send(usuarios)
-            } else {
+            if(res.lenght === 0) {
                 res.status(404).send({message: 'Nome de usuário não localizado.'})
+            } else {
+                res.status(200).send(usuarios)
             }
         })
     }

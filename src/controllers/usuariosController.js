@@ -19,6 +19,18 @@ class UsuarioController {
             }
         });
     }
+    
+    static atualizarUsuario = (req, res) => {
+        const id = req.params.id;
+
+        usuarios.findByIdAndUpdate(id, {$set: req.body}, (err) => {
+            if(err) {
+                res.status(404).send({message: 'Erro na atualização dos dados: ID não encontrado - favor verificar.'})
+            } else {
+                res.status(200).send({message: 'O usuário foi atualizado com sucesso.'})
+            }
+        })
+    }
 }
 
 export default UsuarioController

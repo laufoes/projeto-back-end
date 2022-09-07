@@ -43,6 +43,18 @@ class UsuarioController {
             }
         })
     }
+
+    static deletarUsuario = (req, res) => {
+        const id = req.params.id;
+
+        usuarios.findByIdAndDelete(id, (err) => {
+            if(err) {
+                res.status(404).send({message: `${err.message} ID do usuário não localizado.`})
+            } else {
+                res.status(204).send({message: 'Usuário excluído com sucesso.'})
+            }
+        })
+    }
 }
 
 export default UsuarioController

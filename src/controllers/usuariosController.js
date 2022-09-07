@@ -8,6 +8,18 @@ class UsuarioController {
         });
     }
 
+    static obterUsuarioPorId = (req, res) => {
+        const id = req.params.id;
+
+        usuarios.findById(id, (err, usuarios) => {
+            if(err) {
+                res.status(404).send({message: `${err.message} - ID do usuário não localizado.`})
+            } else {
+                res.status(200).send(usuarios);
+            }
+        })
+    }
+
     static cadastrarUsuario = (req, res) => {
         let usuario = new usuarios(req.body);
 
@@ -25,7 +37,7 @@ class UsuarioController {
 
         usuarios.findByIdAndUpdate(id, {$set: req.body}, (err) => {
             if(err) {
-                res.status(404).send({message: 'Erro na atualização dos dados: ID não encontrado - favor verificar.'})
+                res.status(404).send({message: `${err.message} ID de usuário não localizado.`})
             } else {
                 res.status(200).send({message: 'O usuário foi atualizado com sucesso.'})
             }

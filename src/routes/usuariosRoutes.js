@@ -5,5 +5,6 @@ const router = express.Router();
 
 router
     .get("/api/v1/users", UsuarioController.listarUsuarios)
+    .post("/api/v1/users", UsuarioController.cadastrarUsuario)
 
 export default router;

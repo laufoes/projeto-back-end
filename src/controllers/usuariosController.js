@@ -8,6 +8,17 @@ class UsuarioController {
         });
     }
 
+    static listarUsuariosPorNome = (req, res) => {
+        const name = req.query.name;
+        usuarios.find({'name': name}, {}, (err, usuarios) => {
+            if(!err) {
+                res.status(200).send(usuarios)
+            } else {
+                res.status(404).send({message: 'Nome de usuário não localizado.'})
+            }
+        })
+    }
+
     static obterUsuarioPorId = (req, res) => {
         const id = req.params.id;
 

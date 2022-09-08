@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 import validaEmail from "../helpers/validacaoEmail.js";
 import validaCPF from "../helpers/validacaoCPF.js";
+import validaIdade from "../helpers/validacaoIdade.js";
 
 const usuarioSchema = new mongoose.Schema(
     {
         id: { type: String },
         name: { type: String, required: [true, 'O nome é obrigatório.'], validate: [/[A-Za-z]/, 'Favor inserir um nome válido.'] },
         cpf: { type: String, required: [true, 'O CPF é obrigatório.'], validate: [validaCPF, 'Favor inserir CPF válido.'] },
-        birthDate: { type: String, required: [true, 'A data de nascimento é obrigatória.'], max: "09/09/2004"},
+        birthDate: {type: String, required: true, validate: [validaIdade, "Idade inválida - O usuário deverá ter mais de 18 anos para efetuar o cadastro."]},
         email: { type: String, required: [true, 'O endereço de e-mail é obrigatório.'], validate: [validaEmail, 'Por favor insira um endereço de e-mail válido.'] },
         password: { type: String, required: [true, 'A senha é obrigatória.'], minlength: 6 },
         address: { type: String, required: [true, 'O endereço é obrigatória.'] },
@@ -25,4 +26,4 @@ const usuarioSchema = new mongoose.Schema(
 
 const usuarios = mongoose.model('usuarios', usuarioSchema);
 
-export default usuarios;
+export default usuarios

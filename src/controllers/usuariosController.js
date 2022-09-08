@@ -67,7 +67,7 @@ class UsuarioController {
             if(err) {
                 res.status(404).send({message: `${err.message} ID do usuário não localizado.`})
             } else {
-                res.status(204).send({message: 'Usuário excluído com sucesso.'})
+                res.status(204).send({message: `Usuário excluído com sucesso.`})
             }
         })
     }

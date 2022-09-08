@@ -55,7 +55,7 @@ class UsuarioController {
 
         usuarios.findByIdAndUpdate(id, {$set: req.body}, {runValidators: true}, (err) => {
             if(err) {
-                res.status(404).send({message: `${err.message} ID de usuário não localizado.`})
+                res.status(404).send({message: `${err.message} - Falha ao atualizar o usuário ou ID não localizada.`})
             } else {
                 res.status(200).send({message: 'O usuário foi atualizado com sucesso.'})
             }

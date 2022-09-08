@@ -1,45 +1,22 @@
 import mongoose from "mongoose";
-
-const validaEmail = (email) => {
-    var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return regex.test(email)
-}
-
-const validaDataDeNascimento = (birthDate, age) => {
-    var idadeInserida = getAge(birthDate);
-    if (idadeInserida >= 18) {
-        return true
-    } else {
-        return false
-    }
-}
-
-function getAge(birthDate) {
-    var today = new Date();
-    var dataNascimento = new Date(birthDate);
-    var age = today.getFullYear() - dataNascimento.getFullYear();
-    var m = today.getMonth() - dataNascimento.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < dataNascimento.getDate())) {
-        age--;
-    }    
-    return age;
-}
+import validaEmail from "../helpers/validacaoEmail.js";
+import validaIdade from "../helpers/validacaoIdade.js";
 
 const usuarioSchema = new mongoose.Schema(
     {
         id: { type: String },
-        name: { type: String, required: true },
-        cpf: { type: String, required: true, minlength: 11, maxlength: 11 },
-        birthDate: { type: Date, required: true, validate: [validaDataDeNascimento, 'Vc eh pirralho']},
-        email: { type: String, required: true, validate: [validaEmail, 'Por favor insira um endereço de e-mail válido.'] },
-        password: { type: String, required: true, minlength: 6 },
-        address: { type: String, required: true },
-        number: { type: String, required: true },
-        complement: { type: String, required: true },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        country: { type: String, required: true },
-        zipCode: { type: String, required: true, minlength: 8, maxlength: 8 }
+        name: { type: String, required: [true, 'O nome é obrigatório.'], validate: [/[A-Za-z]/, 'Favor inserir um nome válido.'] },
+        cpf: { type: String, required: [true, 'O CPF é obrigatório.'], validate: [/^[0-9]*$/, 'Favor inserir apenas números.'], minlength: 11, maxlength: 11 },
+        birthDate: { type: String, required: [true, 'A data de nascimento é obrigatória.'], validation: [validaIdade, 'Data inválida, o usuário deve ser maior de 18 anos.']},
+        email: { type: String, required: [true, 'O endereço de e-mail é obrigatório.'], validate: [validaEmail, 'Por favor insira um endereço de e-mail válido.'] },
+        password: { type: String, required: [true, 'A senha é obrigatória.'], minlength: 6 },
+        address: { type: String, required: [true, 'O endereço é obrigatória.'], },
+        number: { type: String, required: [true, 'O telefone é obrigatório.'] },
+        complement: { type: String, required: [true, 'O complemento é obrigatório.'] },
+        city: { type: String, required: [true, 'A cidade é obrigatória.'] },
+        state: { type: String, required: [true, 'O estado é obrigatório.'] },
+        country: { type: String, required: [true, 'O país é obrigatório.'] },
+        zipCode: { type: String, required: [true, 'O CEP é obrigatório.'], validate: [/^[0-9]*$/, 'Favor inserir apenas números.'], minlength: 8, maxlength: 8 }
     },
     {
         versionKey: false

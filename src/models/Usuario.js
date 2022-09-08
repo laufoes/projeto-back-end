@@ -1,18 +1,12 @@
 import mongoose from "mongoose";
 import validaEmail from "../helpers/validacaoEmail.js";
-import validaIdade from "../helpers/validacaoIdade.js";
-
-const formataData = (birthDate) => {
-    const dataNascimento = new Date(birthDate);
-    return dataNascimento.toLocaleDateString();
-}
 
 const usuarioSchema = new mongoose.Schema(
     {
         id: { type: String },
         name: { type: String, required: [true, 'O nome é obrigatório.'], validate: [/[A-Za-z]/, 'Favor inserir um nome válido.'] },
         cpf: { type: String, required: [true, 'O CPF é obrigatório.'], validate: [/^[0-9]*$/, 'Favor inserir apenas números.'], minlength: 11, maxlength: 11 },
-        birthDate: { type: Date, required: [true, 'A data de nascimento é obrigatória.'], max: "09/08/2004"},
+        birthDate: { type: String, required: [true, 'A data de nascimento é obrigatória.'], max: "09/09/2004"},
         email: { type: String, required: [true, 'O endereço de e-mail é obrigatório.'], validate: [validaEmail, 'Por favor insira um endereço de e-mail válido.'] },
         password: { type: String, required: [true, 'A senha é obrigatória.'], minlength: 6 },
         address: { type: String, required: [true, 'O endereço é obrigatória.'] },
